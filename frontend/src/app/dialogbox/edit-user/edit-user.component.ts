@@ -20,6 +20,7 @@ export class EditUserComponent implements OnInit {
   imageSrc: string;
   imageChange = false;
   userDetails;
+
   editForm = new  FormGroup({
     key : new FormControl(null),
     firstname : new FormControl('', Validators.required),

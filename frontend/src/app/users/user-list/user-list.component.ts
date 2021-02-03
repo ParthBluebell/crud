@@ -1,3 +1,4 @@
+
 import { Component, OnInit , AfterViewInit , ViewChild } from '@angular/core';
 import { UserserviceService } from '../../service/userservice.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,6 +6,7 @@ import { AddUserComponent } from 'src/app/dialogbox/add-user/add-user.component'
 import { EditUserComponent } from './../../dialogbox/edit-user/edit-user.component';
 import { ViewUserComponent } from './../../dialogbox/view-user/view-user.component';
 import { DeleteUserComponent } from 'src/app/dialogbox/delete-user/delete-user.component';
+import { UserAddEditComponent } from './../../dialogbox/user-add-edit/user-add-edit.component';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
@@ -36,6 +38,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   sortColoum = 'id';
   sortOrder = 'desc';
   filterValue = '';
+
   constructor(private details: UserserviceService, public dialog: MatDialog) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -46,17 +49,31 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
     this.filterValue = (event.target as HTMLInputElement).value;
     this.startPageSize = this.defaultPageSize;
     this.startpage = this.defaultPage;
+
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
-    // this.userList.filter = this.filterValue.trim().toLowerCase();
   }
 
 
-  openDialog(){
-    const dialogRef = this.dialog.open(AddUserComponent, {width: '75%' , height: '550px'});
-    dialogRef.afterClosed().subscribe(result => {
-      this.refresh();
-    });
+  openDialog(userId: number | null){
+    if(userId == null){
+      const dialogRef = this.dialog.open(UserAddEditComponent, {width: '75%' , height: '550px'  });
+      dialogRef.afterClosed().subscribe(result => {
+        this.refresh();
+      });
+    }else{
+      this.details.getUserDetails(userId).subscribe(data => {
+        this.temUserDetails = (data) ;
+        this.userDetails = (this.temUserDetails).details;
+        const dialogRef = this.dialog.open(UserAddEditComponent, {width: '75%' , height: '550px' ,  data :  this.userDetails[0] });
+        dialogRef.afterClosed().subscribe(result => {
+          this.refresh();
+        });
+      });
+    }
+
   }
+
+
 
   openViewUserDetails(userId){
     this.details.getUserDetails(userId).subscribe(data => {
@@ -66,17 +83,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
     });
   }
 
-  openEditUserDetails(userId){
-    this.details.getUserDetails(userId).subscribe(data => {
-      this.temUserDetails = (data) ;
-      this.userDetails = (this.temUserDetails).details;
-      const dialogRef = this.dialog.open(EditUserComponent, {width: '75%' , height: '550px' ,  data :  this.userDetails[0] });
 
-      dialogRef.afterClosed().subscribe(result => {
-        this.refresh();
-      });
-    });
-  }
 
   openDeleteUserDetails(userId){
     this.details.getUserDetails(userId).subscribe(data => {
@@ -102,7 +109,6 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
     this.sortOrder = sortEvent.direction;
     this.startPageSize = this.defaultPageSize;
     this.startpage = this.defaultPage;
-
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
   }
 

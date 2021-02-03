@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DeleteUserComponent } from './dialogbox/delete-user/delete-user.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { UserAddEditComponent } from './dialogbox/user-add-edit/user-add-edit.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ViewUserComponent,
     EditUserComponent,
     DeleteUserComponent,
+    UserAddEditComponent,
   ],
   imports: [
     BrowserModule,
