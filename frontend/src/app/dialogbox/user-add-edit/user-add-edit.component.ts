@@ -60,7 +60,7 @@ export class UserAddEditComponent implements OnInit {
             department : new FormControl(this.userData.department, Validators.required),
             gender : new FormControl(this.userData.gender, Validators.required),
             dateofbirth : new FormControl(this.userData.birthdate, Validators.required),
-            isPermanent : new FormControl('', Validators.requiredTrue),
+            isPermanent : new FormControl(this.userData.isPermanent, Validators.required),
             userimage : new FormControl(''),
           });
         });
