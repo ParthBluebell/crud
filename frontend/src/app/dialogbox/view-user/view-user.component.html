@@ -1,0 +1,75 @@
+<mat-toolbar>
+    <span>{{ userData.firstname }} {{ userData.lastname }}'s details</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+  <mat-icon>close</mat-icon>
+</button>
+</mat-toolbar>
+<mat-divider></mat-divider>
+
+<mat-grid-list cols="1" rowHeight="125px">
+    <mat-grid-tile>
+        <div class="text-center">
+            <img src="{{baseUrl}}public/upload/user/{{ userData.userimage }}" class="user-image">
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="2" gutterSize="10px" rowHeight="300px">
+    <mat-grid-tile>
+        <div class="control-container">
+            <label>First Name : </label>
+            <p>{{ userData.firstname }} </p>
+            <mat-divider></mat-divider>
+
+            <label>Lats Name : </label>
+            <p>{{ userData.firstname }} </p>
+            <mat-divider></mat-divider>
+
+            <label>Email : </label>
+            <p>{{ userData.email }} </p>
+
+        </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <div class="control-container">
+            <label>Department : </label>
+            <p>{{ userData.department }} </p>
+            <mat-divider></mat-divider>
+
+            <label>Date of Birth: </label>
+            <p>{{ userData.birthdate | date }} </p>
+            <mat-divider></mat-divider>
+
+            <mat-grid-list cols="2" rowHeight="70px">
+                <mat-grid-tile>
+                    <div class="control-container-sec">
+                        <label>Gender : </label>
+                        <p [ngSwitch]="userData.gender">
+                            <span *ngSwitchCase="'M'">Male</span>
+                            <span *ngSwitchCase="'F'">Female</span>
+                            <span *ngSwitchCase="'O'">Other</span>
+                        </p>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="control-container-sec">
+                        <label>Permanent Employee :  </label>
+                        <p *ngIf="userData.isPermanent == '1' ; else elseBlock">Yes</p>
+                        <ng-template #elseBlock>
+                            <p>
+                                No
+                            </p>
+                        </ng-template>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-divider></mat-divider><br>
+<div class="button-row">
+    <button mat-raised-button type="button" (click)="closeDialog()" color="warn">Close</button>
+</div>

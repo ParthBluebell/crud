@@ -1,0 +1,74 @@
+<mat-toolbar>
+    <span>Edit user details</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<form [formGroup]='editForm' class="add-user-from" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="2" gutterSize="10px" rowHeight="300px">
+        <mat-grid-tile>
+            <div class="control-container">
+
+                <input type="hidden" formControlName="key">
+                <mat-form-field>
+                    <input matInput placeholder="Please enter user's first name" formControlName="firstname">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Please enter user's last name" formControlName="lastname">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Please enter user's email" formControlName="email">
+                </mat-form-field>
+
+                <img [src]="imageSrc" *ngIf="imageSrc" class="previewImage"><br>
+                <input formControlName="userimage" id="file" type="file" class="form-control" (change)="onFileChange($event)">
+
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="control-container">
+
+                <mat-form-field>
+                    <mat-select formControlName="department" placeholder="Please select user's department">
+                        <mat-option *ngFor="let items of department" [(value)]="items.id">
+                            {{items.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dateofbirth" placeholder="Please select user's hire date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <br><br>
+
+                <div class="add-bottom-padding">
+                    <mat-radio-group aria-label="Select a user's gender" formControlName="gender" matInput>
+                        <mat-radio-button value="M">Male</mat-radio-button>
+                        <mat-radio-button value="F">Female</mat-radio-button>
+                        <mat-radio-button value="O">Other</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <br>
+
+                <div class="add-bottom-padding">
+                    <mat-checkbox class="example-margin" formControlName="isPermanent">Permanent Employee</mat-checkbox>
+                </div>
+
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider><br>
+    <div class="button-row">
+        <button mat-raised-button type="submit" [disabled]="!editForm.valid" color="primary">Submit</button>
+        <button mat-raised-button type="reset" color="warn">Clear</button>
+    </div>
+
+</form>

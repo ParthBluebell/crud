@@ -1,0 +1,31 @@
+<mat-toolbar>
+    <span>Delete Record</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-divider></mat-divider>
+<br>
+
+<mat-grid-list cols="1" rowHeight="50px">
+    <mat-grid-tile class="text-left">
+        <p>Are you sure you want to delete user details ?</p>
+    </mat-grid-tile>
+</mat-grid-list>
+<mat-divider></mat-divider><br>
+<mat-grid-list cols="2" gutterSize="10px" rowHeight="70px">
+
+    <mat-grid-tile>
+        <div class="control-container">
+            <button mat-raised-button type="button" (click)="confirmDelete(userData.id)" color="primary">Yes , I am sure </button>
+        </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <div class="control-container ">
+            <button mat-raised-button type="button" (click)="closeDialog()" color="warn">No,I don't want</button>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

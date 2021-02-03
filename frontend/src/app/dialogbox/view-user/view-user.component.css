@@ -1,0 +1,68 @@
+.control-container>* {
+    width: 100%;
+}
+
+form.add-user-from {
+    margin: 10px;
+    padding: 10px 0px;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.control-container {
+    width: 100%;
+    padding: 5%;
+}
+
+.control-container-sec {
+    width: 100%;
+}
+
+.control-container>* {
+    width: 100%;
+}
+
+.add-bottom-padding {
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+mat-radio-group mat-radio-button {
+    margin-right: 5px;
+}
+
+.button-row button {
+    margin: 5px;
+    float: right !important;
+}
+
+.text-center {
+    flex: 1 1 auto;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+mat-divider {
+    margin-bottom: 20px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.user-image {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: 15px;
+}
