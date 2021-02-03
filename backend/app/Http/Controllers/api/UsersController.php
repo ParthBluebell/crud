@@ -37,7 +37,7 @@ class UsersController extends Controller
         if(!empty($userslist[0])){
             return response()->json(["message"=> "Userlist found sucessfully" , 'userDetails' => $userslist], 200);
         }else{
-            return response()->json(["message"=> "Userlist not avilable" ], 201);
+            return response()->json(["message"=> "Userlist not avilable" , 'userDetails' => $userslist ], 201);
         }
     }
 

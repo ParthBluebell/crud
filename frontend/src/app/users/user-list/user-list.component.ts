@@ -44,15 +44,12 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-
   applyFilter(event){
     this.filterValue = (event.target as HTMLInputElement).value;
     this.startPageSize = this.defaultPageSize;
     this.startpage = this.defaultPage;
-
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
   }
-
 
   openDialog(userId: number | null){
     if(userId == null){
@@ -70,10 +67,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
         });
       });
     }
-
   }
-
-
 
   openViewUserDetails(userId){
     this.details.getUserDetails(userId).subscribe(data => {

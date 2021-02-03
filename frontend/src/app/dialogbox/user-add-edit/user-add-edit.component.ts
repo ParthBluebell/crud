@@ -68,8 +68,6 @@ export class UserAddEditComponent implements OnInit {
       }
     }
 
-
-
   onFileChange(event) {
     const reader = new FileReader();
 
