@@ -27,6 +27,7 @@ export class UserserviceService {
   url = 'http://dev.bluebell.com/';
 
   getUserList(pageSize , currentPage , sortColoum , sortOrder , filterValue){
+
     const queryParams = '?pageSize=' + pageSize + '&page=' + currentPage + '&sortColoum=' + sortColoum + '&sortOrder=' + sortOrder + '&filterValue=' + filterValue;
     const endPoint = 'api/get-user-list';
     return this.apiData.get(this.url + endPoint + queryParams);

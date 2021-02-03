@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
 
   sortColoum = 'id';
   sortOrder = 'desc';
-  filterValue: string;
+  filterValue = '';
   constructor(private details: UserserviceService, public dialog: MatDialog) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -113,16 +113,13 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   }
 
   getUserList(pageSize: number, page: number , sortColoum: string , sortOrder: string , filterValue: string){
-
     this.details.getUserList(pageSize , page , sortColoum , sortOrder , filterValue).subscribe(data => {
       this.userData = (data);
       this.userList = new MatTableDataSource(((this.userData).userDetails).data);
       this.totalRecord = ((this.userData).userDetails).total ;
       this.userList.sort = this.sort;
     });
-
   }
-
 
   ngOnInit(): void {
   }

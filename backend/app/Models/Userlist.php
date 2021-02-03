@@ -13,11 +13,26 @@ class Userlist extends Model
 
     public function getUserList($request){
 
+        $fillterCol = ["firstname","lastname","email","department","gender"];
+
         $query = Userlist::select("firstname","lastname","email","userimage","birthdate","department","isPermanent","gender" , "id")
                         ->where("is_deleted","N")
                         ->where("usertype","U");
+
         if($request->input('sortColoum') && $request->input('sortOrder')){
             $query->orderBy($request->input('sortColoum') , $request->input('sortOrder'));
+        }
+
+        if($request->input('filterValue')){
+            $flag = 0;
+            foreach ($fillterCol as $key => $value) {
+                if ($flag == 0) {
+                    $query->where($value, 'like', '%' . $request->input('filterValue') . '%');
+                    $flag = $flag + 1;
+                } else {
+                    $query->orWhere($value, 'like', '%' . $request->input('filterValue') . '%');
+                }
+            }
         }
 
         $result = $query->paginate($request->input('pageSize'));
