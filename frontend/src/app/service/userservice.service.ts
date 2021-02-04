@@ -29,7 +29,7 @@ export class UserserviceService {
   getUserList(pageSize , currentPage , sortColoum , sortOrder , filterValue){
 
     const queryParams = '?pageSize=' + pageSize + '&page=' + currentPage + '&sortColoum=' + sortColoum + '&sortOrder=' + sortOrder + '&filterValue=' + filterValue;
-    const endPoint = 'api/get-user-list';
+    const endPoint = 'api/users';
     return this.apiData.get(this.url + endPoint + queryParams);
   }
 
@@ -39,23 +39,25 @@ export class UserserviceService {
   }
 
   addUser(postData){
-    const endPoint = 'api/add-user';
+    // console.log(postData);
+    const endPoint = 'api/users';
     return this.apiData.post(this.url + endPoint, postData);
   }
 
   getUserDetails(userId){
-    const endPoint = 'api/get-user-details';
-    return this.apiData.post(this.url + endPoint, userId);
+    const endPoint = 'api/users/' + userId;
+    return this.apiData.get(this.url + endPoint);
   }
 
   updateUserDetails(postData){
-    const endPoint = 'api/edit-user';
-    return this.apiData.post(this.url + endPoint, postData);
+    const endPoint = 'api/users/' +  postData.getAll('userId');
+    return this.apiData.put(this.url + endPoint, postData);
   }
 
   deleteUserDetail(userId){
-    const endPoint = 'api/delete-user';
-    return this.apiData.post(this.url + endPoint, userId);
+    // console.log(userId);
+    const endPoint = 'api/users/' + userId ;
+    return this.apiData.delete(this.url + endPoint);
   }
 }
 

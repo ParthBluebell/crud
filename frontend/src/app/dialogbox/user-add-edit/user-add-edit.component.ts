@@ -12,7 +12,7 @@ import { UserserviceService } from 'src/app/service/userservice.service';
 })
 export class UserAddEditComponent implements OnInit {
   public userData = null;
-  baseUrl;
+  baseUrl = 'http://dev.bluebell.com/';
   urlResponse;
   selectfile: any ;
   imageSrc: string;
@@ -46,25 +46,18 @@ export class UserAddEditComponent implements OnInit {
         this.title = 'Add new user details';
       }else{
         this.title = 'Edit user details';
-
-        this.service.baseUrl().subscribe(basrUrl => {
-          this.urlResponse = (basrUrl);
-          this.baseUrl = (this.urlResponse).baseurl;
-          this.imageSrc = this.baseUrl + 'public/upload/user/' + this.userData.userimage;
-
-          this.myForm = new  FormGroup({
-            key : new FormControl(this.userData.id),
-            firstname : new FormControl(this.userData.firstname, Validators.required),
-            lastname : new FormControl(this.userData.lastname, Validators.required),
-            email : new FormControl(this.userData.email, [Validators.required , Validators.email]),
-            department : new FormControl(this.userData.department, Validators.required),
-            gender : new FormControl(this.userData.gender, Validators.required),
-            dateofbirth : new FormControl(this.userData.birthdate, Validators.required),
-            isPermanent : new FormControl(this.userData.isPermanent, Validators.required),
-            userimage : new FormControl(''),
-          });
+        this.imageSrc = this.baseUrl +  this.userData.userimage;
+        this.myForm = new  FormGroup({
+          key : new FormControl(this.userData.id),
+          firstname : new FormControl(this.userData.firstname, Validators.required),
+          lastname : new FormControl(this.userData.lastname, Validators.required),
+          email : new FormControl(this.userData.email, [Validators.required , Validators.email]),
+          department : new FormControl(this.userData.department, Validators.required),
+          gender : new FormControl(this.userData.gender, Validators.required),
+          dateofbirth : new FormControl(this.userData.birthdate, Validators.required),
+          isPermanent : new FormControl(this.userData.isPermanent, Validators.required),
+          userimage : new FormControl(''),
         });
-
       }
     }
 
@@ -118,6 +111,7 @@ export class UserAddEditComponent implements OnInit {
         }
       });
     }else{
+      formData.append('userId' , (this.myForm.value).key );
       this.service.updateUserDetails(formData).subscribe(data => {
         this.userDetails = (data);
         if ((this.userDetails).status === 'success'){

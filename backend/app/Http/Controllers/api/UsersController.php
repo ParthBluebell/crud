@@ -71,7 +71,7 @@ class UsersController extends Controller
     }
 
 
-    public function editUser(Request $request){
+    public function editUser(Request $request, $userId){
 
         $objUserlist = new Userlist();
         $res = $objUserlist->editUser($request);
@@ -96,11 +96,11 @@ class UsersController extends Controller
         }
     }
 
-    public function userDetails(Request $request){
-            $userId = $request->input();
+    public function userDetails(Request $request, $userId){
+            // $userId = $request->input();
 
             $objUserlist = new Userlist();
-            $res = $objUserlist->getuserDetails($userId[0]);
+            $res = $objUserlist->getuserDetails($userId);
             if($res){
                 return response()->json(["message"=> "User details sucessfully found" , 'details' => $res ], 200);
             }else{
@@ -109,11 +109,11 @@ class UsersController extends Controller
     }
 
 
-    public function deleteUser(Request $request){
+    public function deleteUser(Request $request,$userId){
 
 
             $objUserlist = new Userlist();
-            $res = $objUserlist->deleteUserDetails($request);
+            $res = $objUserlist->deleteUserDetails($userId);
             if($res){
                 return response()->json([
                     "message"=> "User details sucessfully deleted",

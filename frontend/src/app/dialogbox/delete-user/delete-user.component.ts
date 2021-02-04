@@ -32,10 +32,8 @@ export class DeleteUserComponent implements OnInit {
   confirmDelete(userId){
     const formData = new FormData();
 
-    formData.append('data' , JSON.stringify(userId) );
-
-    this.service.deleteUserDetail(formData).subscribe(data => {
-      console.log(data);
+    this.service.deleteUserDetail(userId).subscribe(data => {
+      // console.log(data);
       this.userDetails = (data);
       this.userDetails = (data);
       if ((this.userDetails).status === 'success'){

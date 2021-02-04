@@ -64,7 +64,7 @@ class Userlist extends Model
                 $userimage = time() . '.' . $image->getClientOriginalExtension();
                 $destinationPath = public_path('/upload/user/');
                 $image->move($destinationPath, $userimage);
-                $objUser->userimage = $userimage;
+                $objUser->userimage = 'public/upload/user/'.$userimage;
             }
 
             $objUser->birthdate = date("Y-m-d" , strtotime($data['dateofbirth']));
@@ -99,8 +99,10 @@ class Userlist extends Model
             return $qurey->count();
     }
     public function editUser($request){
-
+        dd($request->input());
+        die();
         $data = json_decode($request->input('data'), true);
+
         $checkMail = $this->checkemail($data['email'],$data['key']);
 
         if($checkMail == 0){
@@ -132,10 +134,10 @@ class Userlist extends Model
         }
     }
 
-    public function deleteUserDetails($request){
-        $data = json_decode($request->input('data'), true);
+    public function deleteUserDetails($userId){
+
         $userImage = Userlist::select("userimage")
-                    ->where("id",$data)
+                    ->where("id",$userId)
                     ->get();
 
         if ($userImage[0]->userimage) {
@@ -144,7 +146,7 @@ class Userlist extends Model
                 unlink($path);
             }
         }
-        return Userlist::where("id",$data)->delete();
+        return Userlist::where("id",$userId)->delete();
 
         // $objUser = Userlist::find($request->input('userId'));
         // $objUser->is_deleted = "Y";
