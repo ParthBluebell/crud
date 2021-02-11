@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UserserviceService } from 'src/app/service/userservice.service';
-
+import { Service } from './../../model/service.model';
 @Component({
   selector: 'app-user-add-edit',
   templateUrl: './user-add-edit.component.html',
@@ -12,13 +12,15 @@ import { UserserviceService } from 'src/app/service/userservice.service';
 })
 export class UserAddEditComponent implements OnInit {
   public userData = null;
+  dataArry = [];
+
+  serviceModel = new Service();
+  public addmore: FormGroup;
   baseUrl = 'http://dev.bluebell.com/';
   urlResponse;
-  selectfile: any ;
-  imageSrc: string;
   userDetails;
   title ;
-  imageChange = false;
+
 
   department = [
     {id: 'Web', name: 'Web'},
@@ -34,8 +36,7 @@ export class UserAddEditComponent implements OnInit {
     department : new FormControl('', Validators.required),
     gender : new FormControl('1', Validators.required),
     dateofbirth : new FormControl('', Validators.required),
-    isPermanent : new FormControl('', Validators.requiredTrue),
-    userimage : new FormControl('', Validators.required),
+    isPermanent : new FormControl('', Validators.required),
   });
 
   constructor(public service: UserserviceService, public dialog: MatDialogRef<UserAddEditComponent> ,
@@ -46,7 +47,6 @@ export class UserAddEditComponent implements OnInit {
         this.title = 'Add new user details';
       }else{
         this.title = 'Edit user details';
-        this.imageSrc = this.baseUrl +  this.userData.userimage;
         this.myForm = new  FormGroup({
           key : new FormControl(this.userData.id),
           firstname : new FormControl(this.userData.firstname, Validators.required),
@@ -56,42 +56,30 @@ export class UserAddEditComponent implements OnInit {
           gender : new FormControl(this.userData.gender, Validators.required),
           dateofbirth : new FormControl(this.userData.birthdate, Validators.required),
           isPermanent : new FormControl(this.userData.isPermanent, Validators.required),
-          userimage : new FormControl(''),
         });
       }
     }
 
-  onFileChange(event) {
-    const reader = new FileReader();
-
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      this.selectfile =  event.target.files[0];
-
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        this.imageSrc = reader.result as string;
-        this.myForm.patchValue({
-          fileSource: reader.result
-        });
-      };
-      this.imageChange = true;
-    }
-  }
 
   closeDialog(): void {
     this.dialog.close();
     this.myForm.reset();
   }
 
+  addService() {
+    this.serviceModel = new Service();
+    this.dataArry.push(this.serviceModel);
+  }
+
+  removeService(index) {
+    // alert(index);
+    this.dataArry.splice(index);
+  }
 
   onSubmit(): void {
     const formData = new FormData();
     const formValue = this.myForm.value;
-    if (this.imageChange){
-      formData.append('userimage' , this.selectfile , this.selectfile.name );
-    }
+
     formData.append('data' , JSON.stringify(this.myForm.value) );
 
     if (!formValue.key){
@@ -112,6 +100,8 @@ export class UserAddEditComponent implements OnInit {
       });
     }else{
       formData.append('userId' , (this.myForm.value).key );
+      formData.append('_method', 'PUT' );
+
       this.service.updateUserDetails(formData).subscribe(data => {
         this.userDetails = (data);
         if ((this.userDetails).status === 'success'){
@@ -132,6 +122,7 @@ export class UserAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.serviceModel = new Service();
+    this.dataArry.push(this.serviceModel);
   }
-
 }

@@ -72,7 +72,6 @@ class UsersController extends Controller
 
 
     public function editUser(Request $request, $userId){
-
         $objUserlist = new Userlist();
         $res = $objUserlist->editUser($request);
 
@@ -97,15 +96,13 @@ class UsersController extends Controller
     }
 
     public function userDetails(Request $request, $userId){
-            // $userId = $request->input();
-
-            $objUserlist = new Userlist();
-            $res = $objUserlist->getuserDetails($userId);
-            if($res){
-                return response()->json(["message"=> "User details sucessfully found" , 'details' => $res ], 200);
-            }else{
-                return response()->json(["message"=> "Something goess to wrong" ], 201);
-            }
+        $objUserlist = new Userlist();
+        $res = $objUserlist->getuserDetails($userId);
+        if($res){
+            return response()->json(["message"=> "User details sucessfully found" , 'details' => $res ], 200);
+        }else{
+            return response()->json(["message"=> "Something goess to wrong" ], 201);
+        }
     }
 
 

@@ -1,9 +1,6 @@
-
 import { Component, OnInit , AfterViewInit , ViewChild } from '@angular/core';
 import { UserserviceService } from '../../service/userservice.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddUserComponent } from 'src/app/dialogbox/add-user/add-user.component';
-import { EditUserComponent } from './../../dialogbox/edit-user/edit-user.component';
 import { ViewUserComponent } from './../../dialogbox/view-user/view-user.component';
 import { DeleteUserComponent } from 'src/app/dialogbox/delete-user/delete-user.component';
 import { UserAddEditComponent } from './../../dialogbox/user-add-edit/user-add-edit.component';
@@ -17,13 +14,11 @@ import {MatSort} from '@angular/material/sort';
   styleUrls: ['./user-list.component.css']
 })
 
-
 export class UserListComponent implements OnInit  , AfterViewInit  {
-  displayedColumns: string[] = ['userimage', 'firstname', 'lastname', 'email',  'birthdate', 'department' , 'gender', 'action'];
+  displayedColumns: string[] = ['firstname', 'lastname', 'email',  'birthdate', 'department' , 'gender', 'action'];
   userData;
   urlResponse;
   userList ;
-  // baseUrl = {};
   temUserDetails: any;
   userDetails = {};
   pageSizeOptions = ['5', '10', '25', '50' , '100'];
@@ -76,8 +71,6 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
       const dialogRef = this.dialog.open(ViewUserComponent, {width: '75%' , height: '550px' ,  data :  this.userDetails[0] });
     });
   }
-
-
 
   openDeleteUserDetails(userId){
     this.details.getUserDetails(userId).subscribe(data => {

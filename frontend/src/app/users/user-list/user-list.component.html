@@ -28,14 +28,6 @@
             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="userimage">
-            <th mat-header-cell *matHeaderCellDef> UserImage </th>
-            <td mat-cell *matCellDef="let element">
-                <img src="{{ baseUrl + element.userimage }}" class="user-image">
-            </td>
-        </ng-container>
-
         <!-- Position Column -->
         <ng-container matColumnDef="birthdate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birth </th>
@@ -80,7 +72,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
-
     <mat-paginator [pageSizeOptions]="pageSizeOptions" [length]="totalRecord" [pageSize]="startPageSize" (page)="onPaginate($event)" showFirstLastButtons></mat-paginator>
-
 </div>

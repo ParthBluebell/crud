@@ -9,13 +9,13 @@ class Userlist extends Model
 {
     use HasFactory;
     protected $table  = 'users';
-    protected $fillable = ["firstname","lastname","email","userimage","birthdate","department","isPermanent","gender","id"];
+    protected $fillable = ["firstname","lastname","email","birthdate","department","isPermanent","gender","id"];
 
     public function getUserList($request){
 
         $fillterCol = ["firstname","lastname","email","department","gender"];
 
-        $query = Userlist::select("firstname","lastname","email","userimage","birthdate","department","isPermanent","gender" , "id")
+        $query = Userlist::select("firstname","lastname","email","birthdate","department","isPermanent","gender" , "id")
                         ->where("is_deleted","N")
                         ->where("usertype","U");
 
@@ -40,7 +40,7 @@ class Userlist extends Model
         return $result;
     }
     public function getUserDetails($userId){
-        return Userlist::select("firstname","lastname","email","userimage","birthdate","department","isPermanent","gender","id")
+        return Userlist::select("firstname","lastname","email","birthdate","department","isPermanent","gender","id")
                         ->where("is_deleted","N")
                         ->where("usertype","U")
                         ->where("id",$userId)
@@ -59,13 +59,7 @@ class Userlist extends Model
             $objUser->lastname = $data['lastname'];
             $objUser->email = $data['email'];
 
-            if ($request->file('userimage')) {
-                $image = $request->file('userimage');
-                $userimage = time() . '.' . $image->getClientOriginalExtension();
-                $destinationPath = public_path('/upload/user/');
-                $image->move($destinationPath, $userimage);
-                $objUser->userimage = 'public/upload/user/'.$userimage;
-            }
+
 
             $objUser->birthdate = date("Y-m-d" , strtotime($data['dateofbirth']));
             $objUser->department = $data['department'];
@@ -99,8 +93,7 @@ class Userlist extends Model
             return $qurey->count();
     }
     public function editUser($request){
-        dd($request->input());
-        die();
+
         $data = json_decode($request->input('data'), true);
 
         $checkMail = $this->checkemail($data['email'],$data['key']);
@@ -111,13 +104,7 @@ class Userlist extends Model
             $objUser->lastname = $data['lastname'];
             $objUser->email = $data['email'];
 
-            if ($request->file('userimage')) {
-                $image = $request->file('userimage');
-                $userimage = time() . '.' . $image->getClientOriginalExtension();
-                $destinationPath = public_path('/upload/user/');
-                $image->move($destinationPath, $userimage);
-                $objUser->userimage = $userimage;
-            }
+
 
             $objUser->birthdate = date("Y-m-d" , strtotime($data['dateofbirth']));
             $objUser->department = $data['department'];
@@ -135,22 +122,6 @@ class Userlist extends Model
     }
 
     public function deleteUserDetails($userId){
-
-        $userImage = Userlist::select("userimage")
-                    ->where("id",$userId)
-                    ->get();
-
-        if ($userImage[0]->userimage) {
-            $path = './public/upload/user/' . $userImage[0]->userimage;
-            if (file_exists($path)) {
-                unlink($path);
-            }
-        }
         return Userlist::where("id",$userId)->delete();
-
-        // $objUser = Userlist::find($request->input('userId'));
-        // $objUser->is_deleted = "Y";
-        // $objUser->updated_at = date("Y-m-d h:i:s");
-        // return $objUser->save();
     }
 }

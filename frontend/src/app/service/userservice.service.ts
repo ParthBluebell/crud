@@ -12,7 +12,7 @@ export class UserserviceService {
   constructor(private apiData: HttpClient) { }
 
   form: FormGroup = new  FormGroup({
-    // $key : new FormControl(null),
+    $key : new FormControl(null),
     firstname : new FormControl('', Validators.required),
     lastname : new FormControl('', Validators.required),
     email : new FormControl('', [Validators.required , Validators.email]),
@@ -20,7 +20,6 @@ export class UserserviceService {
     gender : new FormControl('1', Validators.required),
     dateofbirth : new FormControl('', Validators.required),
     isPermanent : new FormControl('', Validators.requiredTrue),
-    userimage : new FormControl('', Validators.required),
   });
 
 
@@ -50,8 +49,9 @@ export class UserserviceService {
   }
 
   updateUserDetails(postData){
+
     const endPoint = 'api/users/' +  postData.getAll('userId');
-    return this.apiData.put(this.url + endPoint, postData);
+    return this.apiData.post(this.url + endPoint, postData);
   }
 
   deleteUserDetail(userId){

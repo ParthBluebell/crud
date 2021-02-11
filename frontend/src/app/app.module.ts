@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UsersModule} from './users/users.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {AddUserComponent} from './dialogbox/add-user/add-user.component';
 import {UserserviceService} from './service/userservice.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -19,25 +18,25 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {ViewUserComponent} from './dialogbox/view-user/view-user.component';
-import {EditUserComponent} from './dialogbox/edit-user/edit-user.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { DeleteUserComponent } from './dialogbox/delete-user/delete-user.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { UserAddEditComponent } from './dialogbox/user-add-edit/user-add-edit.component';
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddUserComponent,
     ViewUserComponent,
-    EditUserComponent,
     DeleteUserComponent,
-    UserAddEditComponent,
+    UserAddEditComponent
   ],
   imports: [
     BrowserModule,
+    MatCardModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     UsersModule,
