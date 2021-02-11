@@ -15,7 +15,7 @@ export class UserAddEditComponent implements OnInit {
   dataArry = [];
 
   serviceModel = new Service();
-  public addmore: FormGroup;
+
   baseUrl = 'http://dev.bluebell.com/';
   urlResponse;
   userDetails;
@@ -72,7 +72,6 @@ export class UserAddEditComponent implements OnInit {
   }
 
   removeService(index) {
-    // alert(index);
     this.dataArry.splice(index);
   }
 

@@ -7,14 +7,6 @@
 </mat-toolbar>
 <mat-divider></mat-divider>
 
-<mat-grid-list cols="1" rowHeight="125px">
-    <mat-grid-tile>
-        <div class="text-center">
-            <img src="{{baseUrl  + userData.userimage }}" class="user-image">
-        </div>
-    </mat-grid-tile>
-</mat-grid-list>
-
 <mat-grid-list cols="2" gutterSize="10px" rowHeight="300px">
     <mat-grid-tile>
         <div class="control-container">
@@ -28,7 +20,6 @@
 
             <label>Email : </label>
             <p>{{ userData.email }} </p>
-
         </div>
     </mat-grid-tile>
 
@@ -53,6 +44,7 @@
                         </p>
                     </div>
                 </mat-grid-tile>
+
                 <mat-grid-tile>
                     <div class="control-container-sec">
                         <label>Permanent Employee :  </label>
@@ -64,6 +56,7 @@
                         </ng-template>
                     </div>
                 </mat-grid-tile>
+
             </mat-grid-list>
         </div>
     </mat-grid-tile>

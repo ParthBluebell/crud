@@ -11,8 +11,9 @@ export class ViewUserComponent implements OnInit {
   userData: any ;
   urlResponse;
   baseUrl = 'http://dev.bluebell.com/';
-  // tslint:disable-next-line:max-line-length
-  constructor(public service: UserserviceService, public dialog: MatDialogRef<ViewUserComponent> ,@Optional() @Inject(MAT_DIALOG_DATA) public data: any
+
+  constructor(public service: UserserviceService, public dialog: MatDialogRef<ViewUserComponent> ,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ){
     this.userData = data;
   }

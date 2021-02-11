@@ -7,7 +7,7 @@
 </mat-toolbar>
 
 <mat-divider></mat-divider>
-<form class="add-user-from" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+<form class="add-user-from" [formGroup]="myForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <mat-grid-list cols="2" gutterSize="10px" rowHeight="300px">
         <mat-grid-tile>
             <div class="control-container">
@@ -60,8 +60,10 @@
             </div>
         </mat-grid-tile>
     </mat-grid-list>
+
     <mat-divider></mat-divider><br>
-    <mat-card>User's services</mat-card>
+
+    <!-- <mat-card>User's services</mat-card>
     <div class="showInputField" *ngFor="let obj of dataArry; let i=index">
         <mat-grid-list cols="4" rowHeight="100px">
             <mat-grid-tile>
@@ -91,12 +93,14 @@
                 </div>
             </mat-grid-tile>
         </mat-grid-list>
-    </div>
-    <mat-divider></mat-divider><br>
+    </div> -->
+
+    <!-- <mat-divider></mat-divider><br>
+
     <div class="button-row">
         <button mat-raised-button type="button" color="primary" (click)="addService()">Add Service</button>
     </div>
-    <br><br>
+    <br><br> -->
 
     <mat-divider></mat-divider><br>
     <div class="button-row">
