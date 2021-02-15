@@ -1,3 +1,4 @@
+import { Service } from './../../model/service.model';
 import { Component, OnInit , Optional, Inject} from '@angular/core';
 import { UserserviceService } from 'src/app/service/userservice.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -7,7 +8,12 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.css']
 })
+
 export class ViewUserComponent implements OnInit {
+
+  displayedColumns: string[] = ['service_name', 'service_description', 'service_amount'];
+  dataSource = [];
+
   userData: any ;
   urlResponse;
   baseUrl = 'http://dev.bluebell.com/';
@@ -16,7 +22,10 @@ export class ViewUserComponent implements OnInit {
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ){
     this.userData = data;
+    this.dataSource = data['relation'];
+
   }
+
   department = [
     {id: 1, name: 'Web'},
     {id: 2, name: 'Mobile'},
@@ -28,7 +37,5 @@ export class ViewUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.userData);
   }
-
 }

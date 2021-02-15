@@ -63,44 +63,46 @@
 
     <mat-divider></mat-divider><br>
 
-    <!-- <mat-card>User's services</mat-card>
-    <div class="showInputField" *ngFor="let obj of dataArry; let i=index">
-        <mat-grid-list cols="4" rowHeight="100px">
-            <mat-grid-tile>
-                <div class="control-container">
-                    <mat-form-field>
-                        <input matInput placeholder="Service name" name="name{{i}}" [(ngModel)]="obj.name">
-                    </mat-form-field>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="control-container">
-                    <mat-form-field>
-                        <input matInput placeholder="Service description" name="description{{i}}" [(ngModel)]="obj.description">
-                    </mat-form-field>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="control-container">
-                    <mat-form-field>
-                        <input matInput placeholder="Service amount" name="amount{{i}}" [(ngModel)]="obj.amount">
-                    </mat-form-field>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="control-container" *ngIf="i!=0">
-                    <button mat-raised-button type="button" color="warn" (click)="removeService(i)">Remove Service</button>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-    </div> -->
+    <mat-card>User's services</mat-card>
+    <div formArrayName="itemRows">
+        <div class="showInputField" *ngFor="let itemrow of myForm.controls.itemRows['controls']; let i=index" [formGroupName]="i">
+            <mat-grid-list cols="4" rowHeight="100px">
+                <mat-grid-tile>
+                    <div class="control-container">
+                        <mat-form-field>
+                            <input matInput formControlName="service_name" placeholder="Service name">
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="control-container">
+                        <mat-form-field>
+                            <input matInput formControlName="service_description" placeholder="Service description">
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="control-container">
+                        <mat-form-field>
+                            <input matInput formControlName="service_amount" placeholder="Service amount">
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="control-container" *ngIf="i!=0">
+                        <button mat-raised-button type="button" color="warn" *ngIf="i != 0 " (click)="deleteRow(i)">Remove Service</button>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
 
-    <!-- <mat-divider></mat-divider><br>
+    <mat-divider></mat-divider><br>
 
     <div class="button-row">
-        <button mat-raised-button type="button" color="primary" (click)="addService()">Add Service</button>
+        <button mat-raised-button type="button" color="primary" (click)="addNewRow()">Add Service</button>
     </div>
-    <br><br> -->
+    <br><br>
 
     <mat-divider></mat-divider><br>
     <div class="button-row">

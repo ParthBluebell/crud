@@ -22,6 +22,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   temUserDetails: any;
   userDetails = {};
   pageSizeOptions = ['5', '10', '25', '50' , '100'];
+
   defaultPageSize = 5;
   defaultPage = 1;
 

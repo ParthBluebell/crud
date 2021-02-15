@@ -49,7 +49,6 @@ export class UserserviceService {
   }
 
   updateUserDetails(postData){
-
     const endPoint = 'api/users/' +  postData.getAll('userId');
     return this.apiData.post(this.url + endPoint, postData);
   }
@@ -60,4 +59,3 @@ export class UserserviceService {
     return this.apiData.delete(this.url + endPoint);
   }
 }
-

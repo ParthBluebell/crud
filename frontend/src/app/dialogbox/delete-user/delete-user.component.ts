@@ -33,8 +33,6 @@ export class DeleteUserComponent implements OnInit {
     const formData = new FormData();
 
     this.service.deleteUserDetail(userId).subscribe(data => {
-      // console.log(data);
-      this.userDetails = (data);
       this.userDetails = (data);
       if ((this.userDetails).status === 'success'){
         this.dialog.close();
@@ -51,5 +49,4 @@ export class DeleteUserComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
 }

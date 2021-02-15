@@ -30,9 +30,7 @@ Route::delete('users/{userId}', 'api\UsersController@deleteUser');
 
 Route::put('users/{userId}', 'api\UsersController@editUser');
 
-
-
-// Route::match(['get', 'post'], 'get-user-list', ['as' => 'get-user-list', 'uses' => 'api\UsersController@userslist']);
+Route::match(['get', 'post'], 'get-user-list/{id}', ['as' => 'get-user-list', 'uses' => 'api\UsersController@getuserslist']);
 // Route::match(['get', 'post'], 'get-base-url', ['as' => 'get-base-url', 'uses' => 'api\UsersController@baseurl']);
 // Route::match(['get', 'post'], 'add-user', ['as' => 'add-user', 'uses' => 'api\UsersController@addUser']);
 

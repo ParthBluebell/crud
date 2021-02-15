@@ -25,7 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { UserAddEditComponent } from './dialogbox/user-add-edit/user-add-edit.component';
 import {MatCardModule} from '@angular/material/card';
-
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import {MatCardModule} from '@angular/material/card';
   ],
   imports: [
     BrowserModule,
+    MatTableModule,
     MatCardModule,
     BrowserAnimationsModule,
     MatToolbarModule,
