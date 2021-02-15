@@ -10,5 +10,4 @@ export class AppComponent {
   title = 'frontend';
 
   constructor() { }
-
 }

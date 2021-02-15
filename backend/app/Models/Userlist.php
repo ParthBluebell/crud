@@ -44,8 +44,8 @@ class Userlist extends Model
 
         return $result;
     }
-    public function getUserDetails($userId){
 
+    public function getUserDetails($userId){
         return Userlist::with('relation')
                         ->select("users.firstname","users.lastname","users.email","users.birthdate","users.department",
                         "users.isPermanent","users.gender","users.id")
@@ -53,20 +53,6 @@ class Userlist extends Model
                         ->where("users.is_deleted","N")
                         ->where("users.id",$userId)
                         ->get();
-
-        // return Userlist::select("users.firstname","users.lastname","users.email","users.birthdate","users.department",
-        //                     "users.isPermanent","users.gender","users.id",
-        //                     DB::raw('GROUP_CONCAT(user_services.service_name) AS service_name'),
-        //                     DB::raw('GROUP_CONCAT(user_services.service_description) AS service_description'),
-        //                     DB::raw('GROUP_CONCAT(user_services.service_amount) AS service_amount'))
-
-        //                 ->join("user_services","user_services.user_id","=","users.id")
-        //                 ->where("users.usertype","U")
-        //                 ->where("users.is_deleted","N")
-        //                 ->where("user_services.is_deleted","N")
-        //                 ->where("users.id",$userId)
-        //                 ->groupBy("user_services.user_id")
-        //                 ->get();
     }
 
     public function addUser($request){

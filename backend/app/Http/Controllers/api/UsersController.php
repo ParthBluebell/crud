@@ -190,7 +190,6 @@ class UsersController extends Controller
         $objUserlist = new Userlist();
         $res = $objUserlist->getUserDetailsNew($userId);
         return $res;
-
     }
 }
 

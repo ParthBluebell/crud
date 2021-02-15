@@ -13,7 +13,7 @@ import { Service } from './../../model/service.model';
 export class UserAddEditComponent implements OnInit {
   public userData = null;
   dataArry = [];
-  serviceList = [];
+
   serviceModel = new Service();
   public myForm: FormGroup;
   baseUrl = 'http://dev.bluebell.com/';
@@ -27,7 +27,6 @@ export class UserAddEditComponent implements OnInit {
               private notifyService: NotificationService ) {
 
     this.userData = data;
-    this.serviceList = data['relation'];
 
     if (!this.userData){
       this.title = 'Add new user details';
@@ -46,11 +45,11 @@ export class UserAddEditComponent implements OnInit {
     this.dialog.close();
     this.myForm.reset();
   }
-// console.log(this.myForm.value);
+//// console.log(this.myForm.value);
 // formData.append('data' , JSON.stringify(this.myForm.value) );
 
-// formData.append('userId' , (this.myForm.value).key );
-// formData.append('_method', 'PUT');
+ // formData.append('userId' , (this.myForm.value).key );
+      // formData.append('_method', 'PUT');
   onSubmit(): void {
 
     const formData = new FormData();
