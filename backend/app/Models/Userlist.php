@@ -213,7 +213,14 @@ class Userlist extends Model
     }
 
     public function deleteUserDetails($userId){
-        return Userlist::where("id",$userId)->delete();
+        $res = Services::where("user_id",$userId)->delete();
+        if($res){
+            return Userlist::where("id",$userId)->delete();
+        }else{
+            return false;
+        }
+
+
     }
 
     public function getUserDetailsNew($userId){
