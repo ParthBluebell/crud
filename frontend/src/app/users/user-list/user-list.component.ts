@@ -48,12 +48,16 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   }
 
   openDialog(userId: number | null){
+
     if(userId == null){
+
       const dialogRef = this.dialog.open(UserAddEditComponent, {width: '75%' , height: '550px'  });
       dialogRef.afterClosed().subscribe(result => {
         this.refresh();
       });
+
     }else{
+
       this.details.getUserDetails(userId).subscribe(data => {
         this.temUserDetails = (data) ;
         this.userDetails = (this.temUserDetails).details;
@@ -62,18 +66,22 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
           this.refresh();
         });
       });
+
     }
   }
 
   openViewUserDetails(userId){
+
     this.details.getUserDetails(userId).subscribe(data => {
       this.temUserDetails = (data) ;
       this.userDetails = (this.temUserDetails).details;
       const dialogRef = this.dialog.open(ViewUserComponent, {width: '75%' , height: '550px' ,  data :  this.userDetails[0] });
     });
+
   }
 
   openDeleteUserDetails(userId){
+
     this.details.getUserDetails(userId).subscribe(data => {
       this.temUserDetails = (data) ;
       this.userDetails = (this.temUserDetails).details;
@@ -82,6 +90,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
         this.refresh();
       });
     });
+
   }
 
   ngAfterViewInit(): void {
@@ -93,26 +102,32 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   }
 
   sortData(sortEvent){
+
     this.sortColoum = sortEvent.active;
     this.sortOrder = sortEvent.direction;
     this.startPageSize = this.defaultPageSize;
     this.startpage = this.defaultPage;
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
+
   }
 
   onPaginate(pageEvent: PageEvent){
+
     this.startPageSize = pageEvent.pageSize;
     this.startpage = pageEvent.pageIndex + 1;
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
+
   }
 
   getUserList(pageSize: number, page: number , sortColoum: string , sortOrder: string , filterValue: string){
+
     this.details.getUserList(pageSize , page , sortColoum , sortOrder , filterValue).subscribe(data => {
       this.userData = (data);
       this.userList = new MatTableDataSource(((this.userData).userDetails).data);
       this.totalRecord = ((this.userData).userDetails).total ;
       this.userList.sort = this.sort;
     });
+
   }
 
   ngOnInit(): void {

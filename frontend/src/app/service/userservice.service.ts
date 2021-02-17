@@ -38,7 +38,6 @@ export class UserserviceService {
   }
 
   addUser(postData){
-    // console.log(postData);
     const endPoint = 'api/users';
     return this.apiData.post(this.url + endPoint, postData);
   }
@@ -49,12 +48,11 @@ export class UserserviceService {
   }
 
   updateUserDetails(postData){
-    const endPoint = 'api/users/' +  postData.getAll('userId');
-    return this.apiData.post(this.url + endPoint, postData);
+    const endPoint = 'api/users/' +  postData.key;
+    return this.apiData.put(this.url + endPoint, postData);
   }
 
   deleteUserDetail(userId){
-    // console.log(userId);
     const endPoint = 'api/users/' + userId ;
     return this.apiData.delete(this.url + endPoint);
   }

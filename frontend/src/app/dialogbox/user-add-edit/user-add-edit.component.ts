@@ -13,7 +13,7 @@ import { Service } from './../../model/service.model';
 export class UserAddEditComponent implements OnInit {
   public userData = null;
   dataArry = [];
-
+  serviceRelation: any;
   serviceModel = new Service();
   public myForm: FormGroup;
   baseUrl = 'http://dev.bluebell.com/';
@@ -28,10 +28,13 @@ export class UserAddEditComponent implements OnInit {
 
     this.userData = data;
 
+    // console.log(this.serviceRelation);
+
     if (!this.userData){
       this.title = 'Add new user details';
     }else{
       this.title = 'Edit user details';
+      this.serviceRelation = data.relation;
     }
   }
 
@@ -45,16 +48,17 @@ export class UserAddEditComponent implements OnInit {
     this.dialog.close();
     this.myForm.reset();
   }
-//// console.log(this.myForm.value);
+
+// console.log(this.myForm.value);
 // formData.append('data' , JSON.stringify(this.myForm.value) );
 
- // formData.append('userId' , (this.myForm.value).key );
-      // formData.append('_method', 'PUT');
+// formData.append('userId' , (this.myForm.value).key );
+// formData.append('_method', 'PUT');
   onSubmit(): void {
 
     const formData = new FormData();
     const formValue = this.myForm.value;
-
+// console.log(formValue);
     if (!formValue.key){
       this.service.addUser(formValue).subscribe( data => {
         this.userDetails = (data);
@@ -72,6 +76,7 @@ export class UserAddEditComponent implements OnInit {
         }
       });
     }else{
+
       this.service.updateUserDetails(formValue).subscribe(data => {
         this.userDetails = (data);
         if ((this.userDetails).status === 'success'){
@@ -96,6 +101,7 @@ export class UserAddEditComponent implements OnInit {
   // tslint:disable-next-line:typedef
   ngOnInit() {
       if (!this.userData){
+
         this.title = 'Add new user details';
         this.myForm = this.formBuilder.group({
           key : new FormControl(null),
@@ -108,9 +114,10 @@ export class UserAddEditComponent implements OnInit {
           isPermanent : new FormControl('', Validators.required),
           itemRows: this.formBuilder.array([this.initItemRows()])
         });
-      }else{
-        this.title = 'Edit user details';
 
+      }else{
+
+        this.title = 'Edit user details';
         this.myForm = this.formBuilder.group({
           key : new FormControl(this.userData.id),
           firstname : new FormControl(this.userData.firstname, Validators.required),
@@ -133,11 +140,13 @@ export class UserAddEditComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   initItemRows() {
+
     return this.formBuilder.group({
       service_name: ['', Validators.required],
       service_description: ['', Validators.required],
       service_amount: ['', Validators.required]
     });
+
   }
 
   // tslint:disable-next-line:typedef
@@ -149,4 +158,5 @@ export class UserAddEditComponent implements OnInit {
   deleteRow(index: number) {
     this.formArr.removeAt(index);
   }
+
 }

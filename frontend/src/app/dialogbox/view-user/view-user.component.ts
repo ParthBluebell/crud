@@ -23,7 +23,6 @@ export class ViewUserComponent implements OnInit {
   ){
     this.userData = data;
     this.dataSource = data['relation'];
-
   }
 
   department = [

@@ -132,7 +132,10 @@ class UsersController extends Controller
     }
 
 
-    public function editUser(Request $request, $userId){
+    public function editUser_new(Request $request, $userId){
+
+        print_r($request->input());
+        die();
         $objUserlist = new Userlist();
         $res = $objUserlist->editUser($request);
 
@@ -152,6 +155,66 @@ class UsersController extends Controller
                     "message"=> "Something goes to wrong.Please try again later.",
                     "status" => "fail"
                 ], 200);
+            }
+        }
+    }
+
+
+    public function editUser(Request $request, $userId){
+        $messages = [
+            'firstname.required' => 'Please enter user firstname',
+            'lastname.required' => 'Please enter user lastname',
+            'email.required' => 'Please enter user email',
+            'email.email' => 'Please enter vaild user email ',
+            'department.required' => 'Please select user department',
+            'gender.required' => 'Please enter select gender',
+            'dateofbirth.required' => 'Please enter user dateofbirth',
+            'isPermanent.required' => 'Please select user type'
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email',
+            'department' => 'required',
+            'gender' => 'required',
+            'dateofbirth' => 'required',
+            'isPermanent' => 'required'
+        ],$messages);
+
+
+        if ($validator->fails()) {
+            $error = $validator->errors();
+
+            return response()->json([
+                "message"=> $this->one_validation_message($validator),
+                "status" => "warning"
+            ], 200);
+
+            $result['status'] = '404';
+            $result['message'] =
+            $result['data'] = json_decode("{}");
+        }else{
+            $objUserlist = new Userlist();
+            $res = $objUserlist->editUser($request);
+
+            if($res == "emailExits"){
+                return response()->json([
+                    "message"=> "This email already exists",
+                    "status" => "warning"
+                ], 200);
+            }else{
+                if($res == "true"){
+                    return response()->json([
+                        "message"=> "User details sucessfully edited",
+                        "status" => "success"
+                    ], 200);
+                }else{
+                    return response()->json([
+                        "message"=> "Something goes to wrong.Please try again later.",
+                        "status" => "fail"
+                    ], 200);
+                }
             }
         }
     }

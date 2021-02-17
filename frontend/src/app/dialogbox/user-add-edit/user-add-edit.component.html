@@ -12,6 +12,7 @@
         <mat-grid-tile>
             <div class="control-container">
                 <input type="hidden" formControlName="key">
+
                 <mat-form-field>
                     <input matInput placeholder="Please enter user's first name" formControlName="firstname">
                 </mat-form-field>
@@ -23,11 +24,13 @@
                 <mat-form-field>
                     <input matInput placeholder="Please enter user's email" formControlName="email">
                 </mat-form-field>
+
             </div>
         </mat-grid-tile>
 
         <mat-grid-tile>
             <div class=" control-container ">
+
                 <mat-form-field>
                     <mat-select formControlName="department" placeholder="Please select user 's department">
                         <mat-option *ngFor="let items of department" [value]="items.id">
@@ -66,7 +69,9 @@
     <mat-card>User's services</mat-card>
     <div formArrayName="itemRows">
         <div class="showInputField" *ngFor="let itemrow of myForm.controls.itemRows['controls']; let i=index" [formGroupName]="i">
+
             <mat-grid-list cols="4" rowHeight="100px">
+
                 <mat-grid-tile>
                     <div class="control-container">
                         <mat-form-field>
@@ -74,6 +79,7 @@
                         </mat-form-field>
                     </div>
                 </mat-grid-tile>
+
                 <mat-grid-tile>
                     <div class="control-container">
                         <mat-form-field>
@@ -81,6 +87,7 @@
                         </mat-form-field>
                     </div>
                 </mat-grid-tile>
+
                 <mat-grid-tile>
                     <div class="control-container">
                         <mat-form-field>
@@ -88,11 +95,13 @@
                         </mat-form-field>
                     </div>
                 </mat-grid-tile>
+
                 <mat-grid-tile>
                     <div class="control-container" *ngIf="i!=0">
                         <button mat-raised-button type="button" color="warn" *ngIf="i != 0 " (click)="deleteRow(i)">Remove Service</button>
                     </div>
                 </mat-grid-tile>
+
             </mat-grid-list>
         </div>
     </div>

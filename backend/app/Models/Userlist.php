@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Services;
 use DB;
+use GuzzleHttp\Psr7\Request;
+
 class Userlist extends Model
 {
     use HasFactory;
@@ -149,7 +151,7 @@ class Userlist extends Model
         return $qurey->count();
     }
 
-    public function editUser($request){
+    public function editUser_new($request){
         $data = json_decode($request->input('data'), true);
         $checkMail = $this->checkemail($data['email'],$data['key']);
         if($checkMail == 0){
@@ -171,6 +173,43 @@ class Userlist extends Model
             return "emailExits";
         }
     }
+    public function editUser($request){
+        $checkMail = $this->checkemail($request->input('email'),$request->input('key'));
+        if($checkMail == 0){
+
+            $objUser = Userlist::find($request->input('key'));
+            $objUser->firstname = $request->input('firstname');
+            $objUser->lastname = $request->input('lastname');
+            $objUser->email = $request->input('email');
+            $objUser->birthdate = date("Y-m-d" , strtotime($request->input('dateofbirth')));
+            $objUser->department = $request->input('department');
+            $objUser->isPermanent = $request->input('isPermanent');
+            $objUser->gender = $request->input('gender');
+            $objUser->updated_at = date("Y-m-d h:i:s");
+
+            if($objUser->save()){
+                Services::where("user_id",$request->input('key'))->delete();
+
+                foreach($request->input('itemRows') as $key => $value){
+                    $objServices = new Services();
+                    $objServices->user_id = $request->input('key');
+                    $objServices->service_name = $value['service_name'];
+                    $objServices->service_description = $value['service_description'];
+                    $objServices->service_amount = $value['service_amount'];
+                    $objServices->is_deleted =  "N";
+                    $objServices->created_at = date("Y-m-d h:i:s");
+                    $objServices->updated_at = date("Y-m-d h:i:s");
+                    $objServices->save();
+                }
+
+                return "true";
+            }else{
+                return "false";
+            }
+        }else{
+            return "emailExits";
+        }
+    }
 
     public function deleteUserDetails($userId){
         return Userlist::where("id",$userId)->delete();
@@ -179,7 +218,4 @@ class Userlist extends Model
     public function getUserDetailsNew($userId){
         return Userlist::with('relation')->where('id',1)->get();
     }
-
-
-
 }
