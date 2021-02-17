@@ -1,0 +1,45 @@
+<mat-card>
+    User's services</mat-card>
+<div *ngFor="let item of dataarray;let i=index">
+    <div class="showInputField">
+        <mat-grid-list cols="4" rowHeight="100px">
+            <mat-grid-tile>
+                <div class="control-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Service name" name="serviceName{{i}}" [(ngModel)]="item.name">
+                    </mat-form-field>
+                </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <div class="control-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Service description" name="serviceDescription{{i}}" [(ngModel)]="item.description">
+                    </mat-form-field>
+                </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <div class="control-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Service amount" name="serviceAmount{{i}}" [(ngModel)]="item.amount">
+                    </mat-form-field>
+                </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <div class="control-container" *ngIf="i != 0">
+                    <button mat-raised-button type="button" (click)="removeService(i)" color="warn">Remove Service</button>
+                </div>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+    </div>
+</div>
+
+<mat-divider></mat-divider><br>
+
+<div class="button-row">
+    <button mat-raised-button type="button" (click)="addService()" color="primary">Add Service</button>
+</div>
+<br><br>

@@ -58,7 +58,8 @@ class Userlist extends Model
     }
 
     public function addUser($request){
-
+        // print_r($request->input('services'));
+        // die();
         // $data = json_decode($request->input('data') , true );
 
 
@@ -79,12 +80,12 @@ class Userlist extends Model
             $objUser->updated_at = date("Y-m-d h:i:s");
             if($objUser->save()){
                 $id = $objUser->id;
-                foreach($request->input('itemRows') as $key => $value){
+                foreach($request->input('services') as $key => $value){
                     $objServices = new Services();
                     $objServices->user_id = $id;
-                    $objServices->service_name = $value['service_name'];
-                    $objServices->service_description = $value['service_description'];
-                    $objServices->service_amount = $value['service_amount'];
+                    $objServices->name = $value['name'];
+                    $objServices->description = $value['description'];
+                    $objServices->amount = $value['amount'];
                     $objServices->is_deleted =  "N";
                     $objServices->created_at = date("Y-m-d h:i:s");
                     $objServices->updated_at = date("Y-m-d h:i:s");
@@ -124,7 +125,7 @@ class Userlist extends Model
                 foreach($data['itemRows'] as $key => $value){
                     $objServices = new Services();
                     $objServices->user_id = $id;
-                    $objServices->service_name = $value['service_name'];
+                    $objServices->name = $value['service_name'];
                     $objServices->service_description = $value['service_description'];
                     $objServices->service_amount = $value['service_amount'];
                     $objServices->is_deleted =  "N";
@@ -190,12 +191,12 @@ class Userlist extends Model
             if($objUser->save()){
                 Services::where("user_id",$request->input('key'))->delete();
 
-                foreach($request->input('itemRows') as $key => $value){
+                foreach($request->input('services') as $key => $value){
                     $objServices = new Services();
                     $objServices->user_id = $request->input('key');
-                    $objServices->service_name = $value['service_name'];
-                    $objServices->service_description = $value['service_description'];
-                    $objServices->service_amount = $value['service_amount'];
+                    $objServices->name = $value['name'];
+                    $objServices->description = $value['description'];
+                    $objServices->amount = $value['amount'];
                     $objServices->is_deleted =  "N";
                     $objServices->created_at = date("Y-m-d h:i:s");
                     $objServices->updated_at = date("Y-m-d h:i:s");

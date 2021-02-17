@@ -12,10 +12,13 @@ import { Service } from './../../model/service.model';
 })
 export class UserAddEditComponent implements OnInit {
   public userData = null;
+
   dataArry = [];
   serviceRelation: any;
+
   serviceModel = new Service();
   public myForm: FormGroup;
+
   baseUrl = 'http://dev.bluebell.com/';
   urlResponse;
   userDetails;
@@ -49,16 +52,16 @@ export class UserAddEditComponent implements OnInit {
     this.myForm.reset();
   }
 
-// console.log(this.myForm.value);
-// formData.append('data' , JSON.stringify(this.myForm.value) );
-
-// formData.append('userId' , (this.myForm.value).key );
-// formData.append('_method', 'PUT');
+  getServiceData(data){
+    this.dataArry = data;
+  }
   onSubmit(): void {
 
-    const formData = new FormData();
-    const formValue = this.myForm.value;
-// console.log(formValue);
+    // const formData = new FormData();
+    let formValue = Object.assign({}, this.myForm.value) as any;
+    formValue.services = this.dataArry;
+    // console.log(formValue);
+
     if (!formValue.key){
       this.service.addUser(formValue).subscribe( data => {
         this.userDetails = (data);
@@ -94,6 +97,7 @@ export class UserAddEditComponent implements OnInit {
         }
       });
     }
+
   }
 
 // ===================================
@@ -111,8 +115,7 @@ export class UserAddEditComponent implements OnInit {
           department : new FormControl('', Validators.required),
           gender : new FormControl('1', Validators.required),
           dateofbirth : new FormControl('', Validators.required),
-          isPermanent : new FormControl('', Validators.required),
-          itemRows: this.formBuilder.array([this.initItemRows()])
+          isPermanent : new FormControl('', Validators.required)
         });
 
       }else{
@@ -127,36 +130,10 @@ export class UserAddEditComponent implements OnInit {
           gender : new FormControl(this.userData.gender, Validators.required),
           dateofbirth : new FormControl(this.userData.birthdate, Validators.required),
           isPermanent : new FormControl(this.userData.isPermanent, Validators.required),
-          itemRows: this.formBuilder.array([this.initItemRows()])
         });
 
       }
   }
 
-  // tslint:disable-next-line:typedef
-  get formArr() {
-    return this.myForm.get('itemRows') as FormArray;
-  }
-
-  // tslint:disable-next-line:typedef
-  initItemRows() {
-
-    return this.formBuilder.group({
-      service_name: ['', Validators.required],
-      service_description: ['', Validators.required],
-      service_amount: ['', Validators.required]
-    });
-
-  }
-
-  // tslint:disable-next-line:typedef
-  addNewRow() {
-    this.formArr.push(this.initItemRows());
-  }
-
-  // tslint:disable-next-line:typedef
-  deleteRow(index: number) {
-    this.formArr.removeAt(index);
-  }
 
 }

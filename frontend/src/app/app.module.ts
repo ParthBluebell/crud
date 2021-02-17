@@ -26,13 +26,16 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { UserAddEditComponent } from './dialogbox/user-add-edit/user-add-edit.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
+import { UserServicesComponent } from './dialogbox/user-services/user-services.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ViewUserComponent,
     DeleteUserComponent,
-    UserAddEditComponent
+    UserAddEditComponent,
+    UserServicesComponent
   ],
   imports: [
     BrowserModule,

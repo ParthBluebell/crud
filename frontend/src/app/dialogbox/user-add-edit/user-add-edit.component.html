@@ -7,7 +7,7 @@
 </mat-toolbar>
 
 <mat-divider></mat-divider>
-<form class="add-user-from" [formGroup]="myForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+<form class="add-user-from" [formGroup]="myForm" enctype="multipart/form-data">
     <mat-grid-list cols="2" gutterSize="10px" rowHeight="300px">
         <mat-grid-tile>
             <div class="control-container">
@@ -30,7 +30,6 @@
 
         <mat-grid-tile>
             <div class=" control-container ">
-
                 <mat-form-field>
                     <mat-select formControlName="department" placeholder="Please select user 's department">
                         <mat-option *ngFor="let items of department" [value]="items.id">
@@ -66,56 +65,10 @@
 
     <mat-divider></mat-divider><br>
 
-    <mat-card>User's services</mat-card>
-    <div formArrayName="itemRows">
-        <div class="showInputField" *ngFor="let itemrow of myForm.controls.itemRows['controls']; let i=index" [formGroupName]="i">
-
-            <mat-grid-list cols="4" rowHeight="100px">
-
-                <mat-grid-tile>
-                    <div class="control-container">
-                        <mat-form-field>
-                            <input matInput formControlName="service_name" placeholder="Service name">
-                        </mat-form-field>
-                    </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile>
-                    <div class="control-container">
-                        <mat-form-field>
-                            <input matInput formControlName="service_description" placeholder="Service description">
-                        </mat-form-field>
-                    </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile>
-                    <div class="control-container">
-                        <mat-form-field>
-                            <input matInput formControlName="service_amount" placeholder="Service amount">
-                        </mat-form-field>
-                    </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile>
-                    <div class="control-container" *ngIf="i!=0">
-                        <button mat-raised-button type="button" color="warn" *ngIf="i != 0 " (click)="deleteRow(i)">Remove Service</button>
-                    </div>
-                </mat-grid-tile>
-
-            </mat-grid-list>
-        </div>
-    </div>
-
-    <mat-divider></mat-divider><br>
-
-    <div class="button-row">
-        <button mat-raised-button type="button" color="primary" (click)="addNewRow()">Add Service</button>
-    </div>
-    <br><br>
-
+    <app-user-services (serviceData)="getServiceData($event)" [setServiceData]="serviceRelation"></app-user-services>
     <mat-divider></mat-divider><br>
     <div class="button-row">
-        <button mat-raised-button type="submit" [disabled]="!myForm.valid" color="primary">Submit</button>
+        <button mat-raised-button type="button" (click)="onSubmit()" [disabled]="!myForm.valid" color="primary">Submit</button>
         <button mat-raised-button type="reset" color="warn">Clear</button>
     </div>
 

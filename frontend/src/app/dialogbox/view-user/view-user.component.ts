@@ -11,7 +11,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 
 export class ViewUserComponent implements OnInit {
 
-  displayedColumns: string[] = ['service_name', 'service_description', 'service_amount'];
+  displayedColumns: string[] = ['name', 'description', 'amount'];
   dataSource = [];
 
   userData: any ;
