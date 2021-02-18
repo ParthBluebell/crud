@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Request;
 class Userlist extends Model
 {
     use HasFactory;
+
     protected $table  = 'users';
     protected $fillable = ["firstname","lastname","email","birthdate","department","isPermanent","gender","id"];
 
@@ -58,11 +59,6 @@ class Userlist extends Model
     }
 
     public function addUser($request){
-        // print_r($request->input('services'));
-        // die();
-        // $data = json_decode($request->input('data') , true );
-
-
         $checkMail = $this->checkemail($request->input('email'));
 
         if($checkMail == 0){
@@ -86,7 +82,7 @@ class Userlist extends Model
                     $objServices->name = $value['name'];
                     $objServices->description = $value['description'];
                     $objServices->amount = $value['amount'];
-                    $objServices->is_deleted =  "N";
+                    $objServices->deleted_at =  NULL;
                     $objServices->created_at = date("Y-m-d h:i:s");
                     $objServices->updated_at = date("Y-m-d h:i:s");
                     $objServices->save();
@@ -128,7 +124,7 @@ class Userlist extends Model
                     $objServices->name = $value['service_name'];
                     $objServices->service_description = $value['service_description'];
                     $objServices->service_amount = $value['service_amount'];
-                    $objServices->is_deleted =  "N";
+                    $objServices->deleted_at =  NULL;
                     $objServices->created_at = date("Y-m-d h:i:s");
                     $objServices->updated_at = date("Y-m-d h:i:s");
                     $objServices->save();
@@ -152,28 +148,7 @@ class Userlist extends Model
         return $qurey->count();
     }
 
-    public function editUser_new($request){
-        $data = json_decode($request->input('data'), true);
-        $checkMail = $this->checkemail($data['email'],$data['key']);
-        if($checkMail == 0){
-            $objUser = Userlist::find($data['key']);
-            $objUser->firstname = $data['firstname'];
-            $objUser->lastname = $data['lastname'];
-            $objUser->email = $data['email'];
-            $objUser->birthdate = date("Y-m-d" , strtotime($data['dateofbirth']));
-            $objUser->department = $data['department'];
-            $objUser->isPermanent = $data['isPermanent'];
-            $objUser->gender = $data['gender'];
-            $objUser->updated_at = date("Y-m-d h:i:s");
-            if($objUser->save()){
-                return "true";
-            }else{
-                return "false";
-            }
-        }else{
-            return "emailExits";
-        }
-    }
+
     public function editUser($request){
         $checkMail = $this->checkemail($request->input('email'),$request->input('key'));
         if($checkMail == 0){
@@ -189,20 +164,43 @@ class Userlist extends Model
             $objUser->updated_at = date("Y-m-d h:i:s");
 
             if($objUser->save()){
-                Services::where("user_id",$request->input('key'))->delete();
 
-                foreach($request->input('services') as $key => $value){
-                    $objServices = new Services();
-                    $objServices->user_id = $request->input('key');
-                    $objServices->name = $value['name'];
-                    $objServices->description = $value['description'];
-                    $objServices->amount = $value['amount'];
-                    $objServices->is_deleted =  "N";
-                    $objServices->created_at = date("Y-m-d h:i:s");
-                    $objServices->updated_at = date("Y-m-d h:i:s");
-                    $objServices->save();
+                $idArray = [];
+                $oldIdArray = [];
+
+                $idQurey = Services::select('id')->where("user_id",$request->input('key'))->get()->toArray();
+
+                foreach($idQurey as $key => $value){
+                    array_push($oldIdArray,$value['id']);
                 }
 
+                foreach($request->input('services') as $key => $value){
+                    if(isset($value['id'])){
+                        $objServices = Services::find($value['id']);
+                        $objServices->user_id = $request->input('key');
+                        $objServices->name = $value['name'];
+                        $objServices->description = $value['description'];
+                        $objServices->amount = $value['amount'];
+                        $objServices->updated_at = date("Y-m-d h:i:s");
+                        $objServices->save();
+                    }else{
+                        $objServices = new Services();
+                        $objServices->user_id = $request->input('key');
+                        $objServices->name = $value['name'];
+                        $objServices->description = $value['description'];
+                        $objServices->amount = $value['amount'];
+                        $objServices->created_at = date("Y-m-d h:i:s");
+                        $objServices->updated_at = date("Y-m-d h:i:s");
+                        $objServices->save();
+                    }
+                    array_push($idArray,$objServices->id);
+                }
+
+                foreach(array_diff($oldIdArray,$idArray) as $key => $value){
+                    $objServices = Services::find($value);
+                    $objServices->deleted_at = date("Y-m-d h:i:s");
+                    $objServices->save();
+                }
                 return "true";
             }else{
                 return "false";
@@ -219,8 +217,6 @@ class Userlist extends Model
         }else{
             return false;
         }
-
-
     }
 
     public function getUserDetailsNew($userId){

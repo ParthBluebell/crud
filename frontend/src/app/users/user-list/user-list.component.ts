@@ -34,6 +34,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
   sortColoum = 'id';
   sortOrder = 'desc';
   filterValue = '';
+  pageIndex = 0;
 
   constructor(private details: UserserviceService, public dialog: MatDialog) {}
 
@@ -44,6 +45,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
     this.filterValue = (event.target as HTMLInputElement).value;
     this.startPageSize = this.defaultPageSize;
     this.startpage = this.defaultPage;
+    this.pageIndex = 0;
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
   }
 
@@ -107,6 +109,7 @@ export class UserListComponent implements OnInit  , AfterViewInit  {
     this.sortOrder = sortEvent.direction;
     this.startPageSize = this.defaultPageSize;
     this.startpage = this.defaultPage;
+    this.pageIndex = 0;
     this.getUserList(this.startPageSize, this.startpage, this.sortColoum , this.sortOrder , this.filterValue);
 
   }

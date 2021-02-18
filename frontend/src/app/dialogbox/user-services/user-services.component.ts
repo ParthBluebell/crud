@@ -9,7 +9,7 @@ import { Service } from './../../model/service.model';
 export class UserServicesComponent implements OnInit {
   @Output() serviceData: EventEmitter<any> = new EventEmitter();
 
-  @Input() setServiceData;
+  @Input() setServiceData = [];
 
   service = new Service();
   dataarray = [];
@@ -27,8 +27,6 @@ export class UserServicesComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-
     if(this.setServiceData){
         this.dataarray = this.setServiceData;
     }else{
@@ -37,5 +35,4 @@ export class UserServicesComponent implements OnInit {
     }
     this.serviceData.emit(this.dataarray);
   }
-
 }

@@ -16,9 +16,9 @@ class CreateUserServicesTable extends Migration
         Schema::create('user_services', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('service_name');
-            $table->string('service_description');
-            $table->decimal('service_amount', $precision = 8, $scale = 2);
+            $table->string('name');
+            $table->string('description');
+            $table->integer('amount');
             $table->enum('is_deleted',['Y','N'])->default('N')->comments("Y for Yes , N for No");
             $table->timestamps();
         });

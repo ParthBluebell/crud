@@ -56,11 +56,8 @@ export class UserAddEditComponent implements OnInit {
     this.dataArry = data;
   }
   onSubmit(): void {
-
-    // const formData = new FormData();
     let formValue = Object.assign({}, this.myForm.value) as any;
     formValue.services = this.dataArry;
-    // console.log(formValue);
 
     if (!formValue.key){
       this.service.addUser(formValue).subscribe( data => {
@@ -79,7 +76,6 @@ export class UserAddEditComponent implements OnInit {
         }
       });
     }else{
-
       this.service.updateUserDetails(formValue).subscribe(data => {
         this.userDetails = (data);
         if ((this.userDetails).status === 'success'){
@@ -97,7 +93,6 @@ export class UserAddEditComponent implements OnInit {
         }
       });
     }
-
   }
 
 // ===================================
